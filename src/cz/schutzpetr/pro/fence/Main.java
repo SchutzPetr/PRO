@@ -1,4 +1,4 @@
-package cz.schutzpetr.pt.fence;
+package cz.schutzpetr.pro.fence;
 
 import java.util.List;
 import java.util.Scanner;

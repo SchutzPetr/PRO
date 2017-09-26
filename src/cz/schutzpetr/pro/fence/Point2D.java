@@ -1,4 +1,4 @@
-package cz.schutzpetr.pt.fence;
+package cz.schutzpetr.pro.fence;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

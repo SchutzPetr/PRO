@@ -136,8 +136,8 @@ class QuickHull {
 
         set.remove(furthestP[0]);
         result.add(insertPosition, furthestP[0]);
-        ArrayList<Point2D> leftSetAC = new ArrayList<>();
-        ArrayList<Point2D> leftSetCB = new ArrayList<>();
+        List<Point2D> leftSetAC = new ArrayList<>();
+        List<Point2D> leftSetCB = new ArrayList<>();
 
         set.forEach(point2D -> {
             if (pointLocation(a, furthestP[0], point2D) == 1) {

@@ -101,8 +101,8 @@ class QuickHull {
      * @return -1 pokud je na levé straně, 1 pokud je na pravé a 0 pokud leží na přímce
      */
     private static byte pointLocation(Point2D a, Point2D b, Point2D point2D) {
-        int cp1 = (b.getX() - a.getX()) * (point2D.getY() - a.getY()) - (b.getY() - a.getY()) * (point2D.getX() - a.getX());
-        return (byte) Integer.compare(cp1, 0);
+        int loc = (b.getX() - a.getX()) * (point2D.getY() - a.getY()) - (b.getY() - a.getY()) * (point2D.getX() - a.getX());
+        return (byte) Integer.compare(loc, 0);
     }
 
     /**
@@ -111,19 +111,21 @@ class QuickHull {
      * @param a bod a přímky
      * @param b bod b přímky
      * @param set zbývající body
-     * @param hull výsledek
+     * @param result výsledek
      */
-    private static void hullSet(Point2D a, Point2D b, List<Point2D> set, List<Point2D> hull) {
-        int insertPosition = hull.indexOf(b);
+    private static void hullSet(Point2D a, Point2D b, List<Point2D> set, List<Point2D> result) {
+        int insertPosition = result.indexOf(b);
 
         if (set.size() == 0) return;
         if (set.size() == 1) {
             set.remove(0);
-            hull.add(insertPosition, set.get(0));
+            result.add(insertPosition, set.get(0));
             return;
         }
+
         final int[] dist = {Integer.MIN_VALUE};
         final Point2D[] furthestP = {null};
+
         set.forEach(point2D -> {
             int distance = distance(a, b, point2D);
             if (distance > dist[0]) {
@@ -133,20 +135,20 @@ class QuickHull {
         });
 
         set.remove(furthestP[0]);
-        hull.add(insertPosition, furthestP[0]);
-        ArrayList<Point2D> leftSetAP = new ArrayList<>();
-        ArrayList<Point2D> leftSetPB = new ArrayList<>();
+        result.add(insertPosition, furthestP[0]);
+        ArrayList<Point2D> leftSetAC = new ArrayList<>();
+        ArrayList<Point2D> leftSetCB = new ArrayList<>();
 
         set.forEach(point2D -> {
             if (pointLocation(a, furthestP[0], point2D) == 1) {
-                leftSetAP.add(point2D);
+                leftSetAC.add(point2D);
             }
             if (pointLocation(furthestP[0], b, point2D) == 1) {
-                leftSetPB.add(point2D);
+                leftSetCB.add(point2D);
             }
         });
 
-        hullSet(a, furthestP[0], leftSetAP, hull);
-        hullSet(furthestP[0], b, leftSetPB, hull);
+        hullSet(a, furthestP[0], leftSetAC, result);
+        hullSet(furthestP[0], b, leftSetCB, result);
     }
 }

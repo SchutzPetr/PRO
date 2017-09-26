@@ -24,7 +24,7 @@ public class Main {
             double distance = 0;
 
             for (int j = 0; j < q.size(); j++) {
-                System.out.println(q.get(j == 0 ? q.size() - 1 : j - 1) + " - " + q.get(j));
+                //debug: System.out.println(q.get(j == 0 ? q.size() - 1 : j - 1) + " - " + q.get(j));
                 distance += lineLength(q.get(j == 0 ? q.size() - 1 : j - 1), q.get(j));
             }
             System.out.println(Math.round(distance));
